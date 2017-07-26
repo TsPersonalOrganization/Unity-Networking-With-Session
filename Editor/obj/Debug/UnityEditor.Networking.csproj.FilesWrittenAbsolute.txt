@@ -1,0 +1,7 @@
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Editor/bin/Debug/UnityEditor.Networking.dll.mdb
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Editor/bin/Debug/UnityEditor.Networking.dll
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Editor/obj/Debug/UnityEditor.Networking.dll
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Editor/obj/Debug/UnityEditor.Networking.dll.mdb
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Editor/bin/Debug/UnityEditor.dll
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Editor/bin/Debug/UnityEngine.dll
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Editor/bin/Debug/UnityEngine.Networking.dll

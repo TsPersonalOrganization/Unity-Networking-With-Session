@@ -1,0 +1,7 @@
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Weaver/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Weaver/bin/Debug/Unity.UNetWeaver.dll
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Weaver/obj/Debug/Unity.UNetWeaver.dll
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Weaver/obj/Debug/Unity.UNetWeaver.dll.mdb
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Weaver/bin/Debug/Mono.Cecil.dll
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Weaver/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Weaver/bin/Debug/Mono.Cecil.Pdb.dll

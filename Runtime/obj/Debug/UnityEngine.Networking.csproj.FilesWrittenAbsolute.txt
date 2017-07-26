@@ -1,0 +1,5 @@
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Runtime/bin/Debug/UnityEngine.Networking.dll.mdb
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Runtime/bin/Debug/UnityEngine.Networking.dll
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Runtime/obj/Debug/UnityEngine.Networking.dll
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Runtime/obj/Debug/UnityEngine.Networking.dll.mdb
+/Users/longtoo/Perforce/Support/Unity-Technologies-networking-0994e9af557d/Runtime/bin/Debug/UnityEngine.dll
