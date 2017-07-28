@@ -233,13 +233,9 @@ namespace UnityEngine.Networking
                 {
                     if (LogFilter.logDev) {
                     
-#if ENABLE_GROUP
                         NetworkConnection tempConn = FindConnection(connectionId);
 
-                        Debug.Log("11Server event: host=" + m_ServerHostId + " event=" + networkEvent + " error=" + error+" group="+(tempConn == null?"null":tempConn.groupId.ToString()));
-#else
-                    Debug.Log("22Server event: host=" + m_ServerHostId + " event=" + networkEvent + " error=" + error);
-#endif
+                        Debug.Log("Server event: host=" + m_ServerHostId + " event=" + networkEvent + " error=" + error+" group="+(tempConn == null?"null":tempConn.groupId.ToString()));
                     }
                 }
 

@@ -1071,7 +1071,7 @@ namespace UnityEngine.Networking
                 player = (GameObject)Instantiate(m_PlayerPrefab, Vector3.zero, Quaternion.identity);
             }
 
-            player.layer = (int)conn.groupId;
+//            player.layer = (int)conn.groupId;
 
             NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
         }

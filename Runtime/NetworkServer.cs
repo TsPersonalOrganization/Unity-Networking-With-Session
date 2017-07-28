@@ -441,9 +441,8 @@ namespace UnityEngine.Networking
             return result;
         }
 
-        #if ENABLE_GROUP
 
-        static public void SendWriterToReady(GameObject contextObj, NetworkWriter writer, int channelId, uint groupId)
+        static public void SendWriterToReady(GameObject contextObj, NetworkWriter writer, int channelId, uint groupId = 0)
         {
             if (writer.AsArraySegment().Count > short.MaxValue)
             {
@@ -452,7 +451,7 @@ namespace UnityEngine.Networking
             SendBytesToReady(contextObj, writer.AsArraySegment().Array, writer.AsArraySegment().Count, channelId, groupId);
         }
 
-        static public void SendBytesToReady(GameObject contextObj, byte[] buffer, int numBytes, int channelId, uint groupId)
+        static public void SendBytesToReady(GameObject contextObj, byte[] buffer, int numBytes, int channelId, uint groupId = 0)
         {
             if (contextObj == null)
             {
@@ -509,68 +508,7 @@ namespace UnityEngine.Networking
             }
         }
 
-#else
-        static public void SendWriterToReady(GameObject contextObj, NetworkWriter writer, int channelId)
-        {
-            if (writer.AsArraySegment().Count > short.MaxValue)
-            {
-                throw new UnityException("NetworkWriter used buffer is too big!");
-            }
-            SendBytesToReady(contextObj, writer.AsArraySegment().Array, writer.AsArraySegment().Count, channelId);
-        }
 
-        static public void SendBytesToReady(GameObject contextObj, byte[] buffer, int numBytes, int channelId)
-        {
-            if (contextObj == null)
-            {
-                // no context.. send to all ready connections
-                bool success = true;
-                for (int i = 0; i < connections.Count; i++)
-                {
-                    NetworkConnection conn = connections[i];
-                    if (conn != null && conn.isReady)
-                    {
-                        if (!conn.SendBytes(buffer, numBytes, channelId))
-                        {
-                            success = false;
-                        }
-                    }
-                }
-                if (!success)
-                {
-                    if (LogFilter.logWarn) { Debug.LogWarning("SendBytesToReady failed"); }
-                }
-                return;
-            }
-
-            var uv = contextObj.GetComponent<NetworkIdentity>();
-            try
-            {
-                bool success = true;
-                int count = uv.observers.Count;
-                for (int i = 0; i < count; i++)
-                {
-                    var conn = uv.observers[i];
-                    if (!conn.isReady)
-                        continue;
-
-                    if (!conn.SendBytes(buffer, numBytes, channelId))
-                    {
-                        success = false;
-                    }
-                }
-                if (!success)
-                {
-                    if (LogFilter.logWarn) { Debug.LogWarning("SendBytesToReady failed for " + contextObj); }
-                }
-            }
-            catch (NullReferenceException)
-            {
-                // observers may be null if object has not been spawned
-                if (LogFilter.logWarn) { Debug.LogWarning("SendBytesToReady object " + contextObj + " has not been spawned"); }
-            }
-        }
-#endif
         public static void SendBytesToPlayer(GameObject player, byte[] buffer, int numBytes, int channelId)
         {
             for (int i = 0; i < connections.Count; i++)
@@ -769,20 +707,20 @@ namespace UnityEngine.Networking
         {
             if (LogFilter.logDebug) { Debug.Log("Server accepted client:" + conn.connectionId); }
 
-            uint currentGroup = (uint)((conn.connectionId-1)%2+Settings.minGroupLayer);
-
-            if(currentGroup > Settings.maxGroupLayer)
-            {
-                if (LogFilter.logDebug) { Debug.LogFormat("Max group is{0} and now is{1}, force kick", Settings.maxGroupLayer, currentGroup); }
-
-                conn.Disconnect();
-
-                conn.Dispose();
-
-                return;
-            }
-
-            conn.SetGroupId(currentGroup);
+//            uint currentGroup = (uint)((conn.connectionId-1)%2+Settings.minGroupLayer);
+//
+//            if(currentGroup > Settings.maxGroupLayer)
+//            {
+//                if (LogFilter.logDebug) { Debug.LogFormat("Max group is{0} and now is{1}, force kick", Settings.maxGroupLayer, currentGroup); }
+//
+//                conn.Disconnect();
+//
+//                conn.Dispose();
+//
+//                return;
+//            }
+//
+//            conn.SetGroupId(currentGroup);
 
             // add player info
             conn.SetMaxDelay(m_MaxDelay);
@@ -1367,7 +1305,7 @@ namespace UnityEngine.Networking
             uv.HandleCommand(cmdHash, netMsg.reader);
         }
 
-        internal void SpawnObject(GameObject obj, uint groupId)
+        internal void SpawnObject(GameObject obj, uint groupId = 0)
         {
             if (!NetworkServer.active)
             {
@@ -1578,7 +1516,7 @@ namespace UnityEngine.Networking
         }
 
 
-        static public void Spawn(GameObject obj, uint groupId)
+        static public void Spawn(GameObject obj, uint groupId = 0)
         {
             if (!VerifyCanSpawn(obj))
             {

@@ -67,7 +67,7 @@ namespace UnityEngine.Networking
         public bool localPlayerAuthority { get { return m_LocalPlayerAuthority; } set { m_LocalPlayerAuthority = value; } }
         public NetworkConnection clientAuthorityOwner { get { return m_ClientAuthorityOwner; }}
 
-        public uint groupId { get { return m_GroupId >0?m_GroupId:m_ClientAuthorityOwner.groupId;} }
+        public uint groupId { get { return m_GroupId >0?m_GroupId:(m_ClientAuthorityOwner==null?0:m_ClientAuthorityOwner.groupId);} }
 
 
         public NetworkHash128 assetId
@@ -741,11 +741,9 @@ namespace UnityEngine.Networking
                     }
 
                     s_UpdateWriter.FinishMessage();
-#if ENABLE_GROUP
+
                     NetworkServer.SendWriterToReady(gameObject, s_UpdateWriter, channelId, groupId);
-#else
-                    NetworkServer.SendWriterToReady(gameObject, s_UpdateWriter, channelId);
-#endif
+
                 }
             }
         }

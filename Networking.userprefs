@@ -2,7 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Runtime/NetworkManager.cs">
     <Files>
-      <File FileName="Runtime/NetworkServer.cs" Line="785" Column="28" />
+      <File FileName="Runtime/NetworkServer.cs" Line="1" Column="1" />
       <File FileName="Editor/NetworkIdentityEditor.cs" Line="1" Column="1" />
       <File FileName="Runtime/NetworkIdentity.cs" Line="1" Column="1" />
       <File FileName="Runtime/NetworkBehaviour.cs" Line="1" Column="1" />
