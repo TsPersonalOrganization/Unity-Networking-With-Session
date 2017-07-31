@@ -839,7 +839,7 @@ namespace UnityEngine.Networking
             }
         }
 
-        internal void AddObserver(NetworkConnection conn)
+        internal void AddObserver(NetworkConnection conn, string data)
         {
             if (m_Observers == null)
             {
@@ -858,7 +858,7 @@ namespace UnityEngine.Networking
 
             m_Observers.Add(conn);
             m_ObserverConnections.Add(conn.connectionId);
-            conn.AddToVisList(this);
+            conn.AddToVisList(this, data);
         }
 
         internal void RemoveObserver(NetworkConnection conn)
@@ -872,7 +872,8 @@ namespace UnityEngine.Networking
             conn.RemoveFromVisList(this, false);
         }
 
-        public void RebuildObservers(bool initialize, uint mGroupId = 0)
+
+        public void RebuildObservers(bool initialize, uint mGroupId = 0, string data = "")
         {
             if (m_Observers == null)
                 return;
@@ -900,7 +901,7 @@ namespace UnityEngine.Networking
                         if (!conn.isReady) continue;
                         if(conn.groupId != mGroupId) continue;
 
-                        AddObserver(conn);
+                        AddObserver(conn, data);
                     }
 
                     for (int i = 0; i < NetworkServer.localConnections.Count; i++)
@@ -910,7 +911,7 @@ namespace UnityEngine.Networking
                         if (!conn.isReady) continue;
                         if(conn.groupId != mGroupId) continue;
 
-                        AddObserver(conn);
+                        AddObserver(conn, data);
                     }
                 }
                 return;
@@ -938,7 +939,7 @@ namespace UnityEngine.Networking
                 if (initialize || !oldObservers.Contains(conn))
                 {
                     // new observer
-                    conn.AddToVisList(this);
+                    conn.AddToVisList(this, data);
                     if (LogFilter.logDebug) { Debug.Log("New Observer for " + gameObject + " " + conn); }
                     changed = true;
                 }

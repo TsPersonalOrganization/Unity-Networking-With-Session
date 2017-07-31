@@ -1,13 +1,8 @@
 ﻿<Properties StartupItem="Runtime/UnityEngine.Networking.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Runtime/NetworkManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Runtime/NetworkServer.cs">
     <Files>
       <File FileName="Runtime/NetworkServer.cs" Line="1" Column="1" />
-      <File FileName="Editor/NetworkIdentityEditor.cs" Line="1" Column="1" />
-      <File FileName="Runtime/NetworkIdentity.cs" Line="1" Column="1" />
-      <File FileName="Runtime/NetworkBehaviour.cs" Line="1" Column="1" />
-      <File FileName="Runtime/NetworkConnection.cs" Line="1" Column="1" />
-      <File FileName="Runtime/NetworkManager.cs" Line="1067" Column="38" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

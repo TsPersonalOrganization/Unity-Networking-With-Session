@@ -1104,12 +1104,12 @@ namespace UnityEngine.Networking
             return true;
         }
 
-        static public void SetClientReady(NetworkConnection conn)
+        static public void SetClientReady(NetworkConnection conn, string data = "")
         {
-            instance.SetClientReadyInternal(conn);
+            instance.SetClientReadyInternal(conn, data);
         }
 
-        internal void SetClientReadyInternal(NetworkConnection conn)
+        internal void SetClientReadyInternal(NetworkConnection conn, string data = "")
         {
             if (LogFilter.logDebug) { Debug.Log("SetClientReadyInternal for conn:" + conn.connectionId); }
 
@@ -1144,7 +1144,7 @@ namespace UnityEngine.Networking
                         var vis = uv.OnCheckObserver(conn);
                         if (vis)
                         {
-                            uv.AddObserver(conn);
+                            uv.AddObserver(conn, data);
                         }
                         if (!uv.isClient)
                         {
@@ -1184,7 +1184,7 @@ namespace UnityEngine.Networking
                 var vis = uv.OnCheckObserver(conn);
                 if (vis)
                 {
-                    uv.AddObserver(conn);
+                    uv.AddObserver(conn, data);
                 }
             }
 
@@ -1192,10 +1192,10 @@ namespace UnityEngine.Networking
             conn.Send(MsgType.SpawnFinished, msg);
         }
 
-        static internal void ShowForConnection(NetworkIdentity uv, NetworkConnection conn)
+        static internal void ShowForConnection(NetworkIdentity uv, NetworkConnection conn, string data)
         {
             if (conn.isReady)
-                instance.SendSpawnMessage(uv, conn);
+                instance.SendSpawnMessage(uv, conn, data);
         }
 
         static internal void HideForConnection(NetworkIdentity uv, NetworkConnection conn)
@@ -1305,7 +1305,7 @@ namespace UnityEngine.Networking
             uv.HandleCommand(cmdHash, netMsg.reader);
         }
 
-        internal void SpawnObject(GameObject obj, uint groupId = 0)
+        internal void SpawnObject(GameObject obj, uint groupId = 0, string data = "")
         {
             if (!NetworkServer.active)
             {
@@ -1326,11 +1326,12 @@ namespace UnityEngine.Networking
 
             if (LogFilter.logDebug) { Debug.Log("SpawnObject instance ID " + objNetworkIdentity.netId + " asset ID " + objNetworkIdentity.assetId); }
 
-            objNetworkIdentity.RebuildObservers(true, groupId);
+            objNetworkIdentity.RebuildObservers(true, groupId, data);
             //SendSpawnMessage(objNetworkIdentity, null);
         }
 
-        internal void SendSpawnMessage(NetworkIdentity uv, NetworkConnection conn)
+
+        internal void SendSpawnMessage(NetworkIdentity uv, NetworkConnection conn, string data = "")
         {
             if (uv.serverOnly)
                 return;
@@ -1342,6 +1343,7 @@ namespace UnityEngine.Networking
                 msg.assetId = uv.assetId;
                 msg.position = uv.transform.position;
                 msg.rotation = uv.transform.rotation;
+                msg.data = data;
 
                 // include synch data
                 NetworkWriter writer = new NetworkWriter();
@@ -1515,15 +1517,14 @@ namespace UnityEngine.Networking
             objects.Clear();
         }
 
-
-        static public void Spawn(GameObject obj, uint groupId = 0)
+        static public void Spawn(GameObject obj, uint groupId = 0, string data = "")
         {
             if (!VerifyCanSpawn(obj))
             {
                 return;
             }
 
-            instance.SpawnObject(obj, groupId);
+            instance.SpawnObject(obj, groupId, data);
         }
 
         static bool CheckForPrefab(GameObject obj)
@@ -1546,7 +1547,7 @@ namespace UnityEngine.Networking
             return true;
         }
 
-        static public Boolean SpawnWithClientAuthority(GameObject obj, GameObject player)
+        static public Boolean SpawnWithClientAuthority(GameObject obj, GameObject player, string data = "")
         {
             var uv = player.GetComponent<NetworkIdentity>();
             if (uv == null)
@@ -1561,10 +1562,10 @@ namespace UnityEngine.Networking
                 return false;
             }
 
-            return SpawnWithClientAuthority(obj, uv.connectionToClient);
+            return SpawnWithClientAuthority(obj, uv.connectionToClient, data);
         }
 
-        static public bool SpawnWithClientAuthority(GameObject obj, NetworkConnection conn)
+        static public bool SpawnWithClientAuthority(GameObject obj, NetworkConnection conn, string data = "")
         {
             if (!conn.isReady)
             {
@@ -1572,7 +1573,7 @@ namespace UnityEngine.Networking
                 return false;
             }
 
-            Spawn(obj, conn.groupId);
+            Spawn(obj, conn.groupId, data);
 
             var uv = obj.GetComponent<NetworkIdentity>();
             if (uv == null || !uv.isServer)
@@ -1584,9 +1585,9 @@ namespace UnityEngine.Networking
             return uv.AssignClientAuthority(conn);
         }
 
-        static public bool SpawnWithClientAuthority(GameObject obj, NetworkHash128 assetId, NetworkConnection conn)
+        static public bool SpawnWithClientAuthority(GameObject obj, NetworkHash128 assetId, NetworkConnection conn, string data = "")
         {
-            Spawn(obj, assetId);
+            Spawn(obj, assetId, data);
 
             var uv = obj.GetComponent<NetworkIdentity>();
             if (uv == null || !uv.isServer)
@@ -1598,7 +1599,7 @@ namespace UnityEngine.Networking
             return uv.AssignClientAuthority(conn);
         }
 
-        static public void Spawn(GameObject obj, NetworkHash128 assetId)
+        static public void Spawn(GameObject obj, NetworkHash128 assetId, string data)
         {
             if (!VerifyCanSpawn(obj))
             {
@@ -1610,7 +1611,7 @@ namespace UnityEngine.Networking
             {
                 id.SetDynamicAssetId(assetId);
             }
-            instance.SpawnObject(obj, id.groupId);
+            instance.SpawnObject(obj, id.groupId, data);
         }
 
         static public void Destroy(GameObject obj)

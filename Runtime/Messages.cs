@@ -341,6 +341,7 @@ namespace UnityEngine.Networking.NetworkSystem
         public Vector3 position;
         public byte[] payload;
         public Quaternion rotation;
+        public string data = string.Empty;
 
         public override void Deserialize(NetworkReader reader)
         {
@@ -348,7 +349,7 @@ namespace UnityEngine.Networking.NetworkSystem
             assetId = reader.ReadNetworkHash128();
             position = reader.ReadVector3();
             payload = reader.ReadBytesAndSize();
-
+            data = reader.ReadString();
             uint extraPayloadSize = sizeof(uint) * 4;
             if ((reader.Length - reader.Position) >= extraPayloadSize)
             {
@@ -362,7 +363,7 @@ namespace UnityEngine.Networking.NetworkSystem
             writer.Write(assetId);
             writer.Write(position);
             writer.WriteBytesFull(payload);
-
+            writer.Write(data);
             writer.Write(rotation);
         }
     }

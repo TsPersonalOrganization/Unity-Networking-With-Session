@@ -10,6 +10,9 @@ namespace UnityEngine.Networking
     // Handles requests to spawn objects on the client
     public delegate GameObject SpawnDelegate(Vector3 position, NetworkHash128 assetId);
 
+    // Handles requests to spawn objects on the client
+    public delegate GameObject SpawnExDelegate(Vector3 position, NetworkHash128 assetId, string data);
+
     // Handles requests to unspawn objects on the client
     public delegate void UnSpawnDelegate(GameObject spawned);
 
