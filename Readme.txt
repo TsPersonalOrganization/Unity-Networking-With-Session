@@ -8,8 +8,8 @@
 //###################2017.07.31
 
 1.增加了SpawnExDelegate(Vector3 position, NetworkHash128 assetId, string data); 以便在Spawn的时候传送其它数据
-2.ClientScene增加了 SpawnExDelete相关的RegisterPrefab,RegisterSpawnHandler方法。
-3.NetworkScene增加了 存储SpawnExDelete的相关Hashtable字段：s_SpawnExHandlers，并在获取,移除,清空Spawner时针对s_SpawnExHandlers做了相应增加删除处理，。
+2.ClientScene增加了 SpawnExDelegate相关的RegisterPrefab,RegisterSpawnHandler方法。
+3.NetworkScene增加了 存储SpawnExDelegate的相关Hashtable字段：s_SpawnExHandlers，并在获取,移除,清空Spawner时针对s_SpawnExHandlers做了相应增加删除处理，。
 4.NetworkScene增加了 SpawnExDelete相关的RegisterPrefab,RegisterSpawnHandler方法。
 5.NetworkScene增加了 GetSpawnHandler(NetworkHash128 assetId, out SpawnExDelegate handler)，方法用于获取新的SpawnExDelegate
 6.NetworkServer增加Spawn方法的data参数，默认为空。
