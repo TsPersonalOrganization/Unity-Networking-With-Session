@@ -1,0 +1,46 @@
+NetworkServer.Spawn
+	public static void Spawn(GameObject obj, uint groupId = 0, string data = “”);
+	public static void Spawn(GameObject obj, NetworkHash128 assetId, string data = "")
+
+Parameters
+	obj		Game object with NetworkIdentity to spawn.
+	groupId		The session ID.
+	assetId 	The asset id of spawn object.
+	data		The message when spawn.
+
+
+NetworkServer.SpawnWithClientAuthority
+	public static bool SpawnWithClientAuthority(GameObject obj, GameObject player, string data = “”);
+	public static bool SpawnWithClientAuthority(GameObject obj, NetworkConnection conn, string data = “”);
+
+Parameters
+	obj		The object to spawn.
+	player		The player object to set Client Authority to.
+	conn 		The connection to set Client Authority to.
+	data		The message when spawn.
+
+
+NetworkConnection.SetGroupId
+	public void SetGroupId(uint mGroupId);
+
+Parameters
+	mGroupId	The session id of this Connection.
+
+
+Client.RegisterPrefab
+	public static void RegisterPrefab(GameObject prefab, SpawnExDelegate spawnHandler, UnSpawnDelegate unspawnHandler);
+
+Parameters
+	prefab		A Prefab that will be spawned.
+	spawnHandler	A method to use as a custom spawnhandler on clients.
+	unspawnHandler	A method to use as a custom un-spawnhandler on clients.
+
+
+Client.RegisterSpawnHandler
+	public static void Client.RegisterSpawnHandler(NetworkHash128 assetId, SpawnExDelegate spawnHandler, UnSpawnDelegate unspawnHandler);
+
+Parameters
+	assetId		Custom assetId string.
+	spawnHandler	A method to use as a custom spawnhandler on clients.
+	unspawnHandler	A method to use as a custom un-spawnhandler on clients.
+
