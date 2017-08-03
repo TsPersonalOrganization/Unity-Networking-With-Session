@@ -1,7 +1,7 @@
-/Users/longtoo/Perforce/Support/未命名文件夹/Unity-Networking-With-Session/Weaver/bin/Debug/Unity.UNetWeaver.dll.mdb
-/Users/longtoo/Perforce/Support/未命名文件夹/Unity-Networking-With-Session/Weaver/bin/Debug/Unity.UNetWeaver.dll
-/Users/longtoo/Perforce/Support/未命名文件夹/Unity-Networking-With-Session/Weaver/obj/Debug/Unity.UNetWeaver.dll
-/Users/longtoo/Perforce/Support/未命名文件夹/Unity-Networking-With-Session/Weaver/obj/Debug/Unity.UNetWeaver.dll.mdb
-/Users/longtoo/Perforce/Support/未命名文件夹/Unity-Networking-With-Session/Weaver/bin/Debug/Mono.Cecil.dll
-/Users/longtoo/Perforce/Support/未命名文件夹/Unity-Networking-With-Session/Weaver/bin/Debug/Mono.Cecil.Mdb.dll
-/Users/longtoo/Perforce/Support/未命名文件夹/Unity-Networking-With-Session/Weaver/bin/Debug/Mono.Cecil.Pdb.dll
+/Users/longtoo/Perforce/Support/Git/Unity-Networking-With-Session/Weaver/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/longtoo/Perforce/Support/Git/Unity-Networking-With-Session/Weaver/bin/Debug/Unity.UNetWeaver.dll
+/Users/longtoo/Perforce/Support/Git/Unity-Networking-With-Session/Weaver/obj/Debug/Unity.UNetWeaver.dll
+/Users/longtoo/Perforce/Support/Git/Unity-Networking-With-Session/Weaver/obj/Debug/Unity.UNetWeaver.dll.mdb
+/Users/longtoo/Perforce/Support/Git/Unity-Networking-With-Session/Weaver/bin/Debug/Mono.Cecil.dll
+/Users/longtoo/Perforce/Support/Git/Unity-Networking-With-Session/Weaver/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/longtoo/Perforce/Support/Git/Unity-Networking-With-Session/Weaver/bin/Debug/Mono.Cecil.Pdb.dll
