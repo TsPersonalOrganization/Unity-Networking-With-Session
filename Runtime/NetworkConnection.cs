@@ -543,7 +543,7 @@ namespace UnityEngine.Networking
 
         public override string ToString()
         {
-            return string.Format("hostId: {0} connectionId: {1} isReady: {2} channel count: {3}", hostId, connectionId, isReady, (m_Channels != null ? m_Channels.Length : 0));
+            return string.Format("hostId: {0} connectionId: {1} isReady: {2} channel count: {3} groupId: {4}", hostId, connectionId, isReady, (m_Channels != null ? m_Channels.Length : 0), groupId);
         }
 
         internal void AddToVisList(NetworkIdentity uv, string data)

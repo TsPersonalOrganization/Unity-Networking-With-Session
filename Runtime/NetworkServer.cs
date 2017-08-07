@@ -1605,7 +1605,7 @@ namespace UnityEngine.Networking
             return uv.AssignClientAuthority(conn);
         }
 
-        static public void Spawn(GameObject obj, NetworkHash128 assetId, string data = "")
+        static public void Spawn(GameObject obj, NetworkHash128 assetId, uint groupId = 0, string data = "")
         {
             if (!VerifyCanSpawn(obj))
             {
@@ -1617,7 +1617,7 @@ namespace UnityEngine.Networking
             {
                 id.SetDynamicAssetId(assetId);
             }
-            instance.SpawnObject(obj, id.groupId, data);
+            instance.SpawnObject(obj, groupId, data);
         }
 
         static public void Destroy(GameObject obj)
