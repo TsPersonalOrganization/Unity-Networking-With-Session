@@ -1593,7 +1593,7 @@ namespace UnityEngine.Networking
 
         static public bool SpawnWithClientAuthority(GameObject obj, NetworkHash128 assetId, NetworkConnection conn, string data = "")
         {
-            Spawn(obj, assetId, data);
+            Spawn(obj, assetId, conn.groupId, data);
 
             var uv = obj.GetComponent<NetworkIdentity>();
             if (uv == null || !uv.isServer)
