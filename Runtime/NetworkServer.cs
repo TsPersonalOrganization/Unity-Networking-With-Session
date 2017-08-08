@@ -1525,12 +1525,6 @@ namespace UnityEngine.Networking
             objects.Clear();
         }
 
-        /// <summary>
-        /// Spawn the specified obj, groupId and data.
-        /// </summary>
-        /// <param name="obj">Object.</param>
-        /// <param name="groupId">所在组的ID.</param>
-        /// <param name="data">spawn时传递的数据.</param>
         static public void Spawn(GameObject obj, uint groupId = 0, string data = "")
         {
             if (!VerifyCanSpawn(obj))
@@ -1601,7 +1595,7 @@ namespace UnityEngine.Networking
 
         static public bool SpawnWithClientAuthority(GameObject obj, NetworkHash128 assetId, NetworkConnection conn, string data = "")
         {
-            Spawn(obj, assetId, conn.groupId, data);
+            Spawn(obj, assetId, data);
 
             var uv = obj.GetComponent<NetworkIdentity>();
             if (uv == null || !uv.isServer)
@@ -1613,7 +1607,7 @@ namespace UnityEngine.Networking
             return uv.AssignClientAuthority(conn);
         }
 
-        static public void Spawn(GameObject obj, NetworkHash128 assetId, uint groupId = 0, string data = "")
+        static public void Spawn(GameObject obj, NetworkHash128 assetId, string data)
         {
             if (!VerifyCanSpawn(obj))
             {
@@ -1625,7 +1619,7 @@ namespace UnityEngine.Networking
             {
                 id.SetDynamicAssetId(assetId);
             }
-            instance.SpawnObject(obj, groupId, data);
+            instance.SpawnObject(obj, id.groupId, data);
         }
 
         static public void Destroy(GameObject obj)

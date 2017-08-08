@@ -2,6 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Runtime/NetworkServer.cs">
     <Files>
+<<<<<<< HEAD
       <File FileName="Runtime/NetworkManagerHUD.cs" Line="17" Column="9" />
       <File FileName="Runtime/ClientScene.cs" Line="106" Column="57" />
       <File FileName="Runtime/NetworkScene.cs" Line="149" Column="54" />
@@ -9,6 +10,9 @@
       <File FileName="Runtime/UNetwork.cs" Line="1" Column="1" />
       <File FileName="Runtime/NetworkConnection.cs" Line="546" Column="196" />
       <File FileName="Runtime/NetworkIdentity.cs" Line="85" Column="9" />
+=======
+      <File FileName="Runtime/NetworkServer.cs" Line="1" Column="1" />
+>>>>>>> 0821c6e176ed0b6a8d1db523e29e57cd04fbea77
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
