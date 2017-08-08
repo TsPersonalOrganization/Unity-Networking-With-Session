@@ -707,20 +707,20 @@ namespace UnityEngine.Networking
         {
             if (LogFilter.logDebug) { Debug.Log("Server accepted client:" + conn.connectionId); }
 
-//            uint currentGroup = (uint)((conn.connectionId-1)%2+Settings.minGroupLayer);
-//
-//            if(currentGroup > Settings.maxGroupLayer)
-//            {
-//                if (LogFilter.logDebug) { Debug.LogFormat("Max group is{0} and now is{1}, force kick", Settings.maxGroupLayer, currentGroup); }
-//
-//                conn.Disconnect();
-//
-//                conn.Dispose();
-//
-//                return;
-//            }
-//
-//            conn.SetGroupId(currentGroup);
+            uint currentGroup = (uint)((conn.connectionId-1)%2+Settings.minGroupLayer);
+
+            if(currentGroup > Settings.maxGroupLayer)
+            {
+                if (LogFilter.logDebug) { Debug.LogFormat("Max group is{0} and now is{1}, force kick", Settings.maxGroupLayer, currentGroup); }
+
+                conn.Disconnect();
+
+                conn.Dispose();
+
+                return;
+            }
+
+            conn.SetGroupId(currentGroup);
 
             // add player info
             conn.SetMaxDelay(m_MaxDelay);
@@ -1176,6 +1176,7 @@ namespace UnityEngine.Networking
                 }
                 if(uv.groupId != conn.groupId)
                 {
+                    Debug.Log("~~~~uv.assetId:"+uv.assetId +"  uv.netId:"+uv.netId+"  uv.groupId:"+uv.groupId+" conn.groupId:"+conn.groupId, uv.gameObject);
                     continue;
                 }
 
@@ -1314,6 +1315,7 @@ namespace UnityEngine.Networking
             }
 
             NetworkIdentity objNetworkIdentity;
+
             if (!GetNetworkIdentity(obj, out objNetworkIdentity))
             {
                 if (LogFilter.logError) { Debug.LogError("SpawnObject " + obj + " has no NetworkIdentity. Please add a NetworkIdentity to " + obj); }
@@ -1324,7 +1326,9 @@ namespace UnityEngine.Networking
 
             objNetworkIdentity.OnStartServer(false);
 
-            if (LogFilter.logDebug) { Debug.Log("SpawnObject instance ID " + objNetworkIdentity.netId + " asset ID " + objNetworkIdentity.assetId); }
+            objNetworkIdentity.ForceSetGroupId(groupId);
+
+            if (LogFilter.logDebug) { Debug.Log("SpawnObject instance ID " + objNetworkIdentity.netId + " asset ID " + objNetworkIdentity.assetId + " GroupID:" + objNetworkIdentity.groupId); }
 
             objNetworkIdentity.RebuildObservers(true, groupId, data);
             //SendSpawnMessage(objNetworkIdentity, null);
@@ -1345,6 +1349,8 @@ namespace UnityEngine.Networking
                 msg.rotation = uv.transform.rotation;
                 msg.data = data;
 
+                Debug.Log("SendSpawnMessage:"+data);
+
                 // include synch data
                 NetworkWriter writer = new NetworkWriter();
                 uv.UNetSerializeAllVars(writer);
@@ -1352,6 +1358,8 @@ namespace UnityEngine.Networking
                 {
                     msg.payload = writer.ToArray();
                 }
+
+                Debug.Log(conn+":"+msg.data);
 
                 if (conn != null)
                 {

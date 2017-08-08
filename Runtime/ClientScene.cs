@@ -534,7 +534,7 @@ namespace UnityEngine.Networking
                 if (LogFilter.logError) { Debug.LogError("OnObjSpawn netId: " + s_ObjectSpawnMessage.netId + " has invalid asset Id"); }
                 return;
             }
-            if (LogFilter.logDebug) { Debug.Log("Client spawn handler instantiating [netId:" + s_ObjectSpawnMessage.netId + " asset ID:" + s_ObjectSpawnMessage.assetId + " pos:" + s_ObjectSpawnMessage.position + "]"); }
+            if (LogFilter.logDebug) { Debug.Log("Client spawn handler instantiating [netId:" + s_ObjectSpawnMessage.netId + " asset ID:" + s_ObjectSpawnMessage.assetId + " pos:" + s_ObjectSpawnMessage.position+" data:"+s_ObjectSpawnMessage.data + "]"); }
 
 #if UNITY_EDITOR
             UnityEditor.NetworkDetailStats.IncrementStat(
