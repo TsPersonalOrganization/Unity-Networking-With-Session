@@ -889,6 +889,7 @@ namespace UnityEngine.Networking
                 NetworkBehaviour comp = m_NetworkBehaviours[i];
                 result |= comp.OnRebuildObservers(newObservers, initialize);
             }
+
             if (!result)
             {
                 // none of the behaviours rebuilt our observers, use built-in rebuild method
@@ -899,7 +900,7 @@ namespace UnityEngine.Networking
                         var conn = NetworkServer.connections[i];
                         if (conn == null) continue;
                         if (!conn.isReady) continue;
-                        if(conn.groupId != mGroupId) continue;
+                        if(conn.groupId != mGroupId)continue;
 
                         AddObserver(conn, data);
                     }

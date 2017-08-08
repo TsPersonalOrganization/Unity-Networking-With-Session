@@ -914,22 +914,22 @@ namespace UnityEngine.Networking
             return instance.InternalReplacePlayerForConnection(conn, player, playerControllerId);
         }
 
-        static public bool AddPlayerForConnection(NetworkConnection conn, GameObject player, short playerControllerId, NetworkHash128 assetId)
+        static public bool AddPlayerForConnection(NetworkConnection conn, GameObject player, short playerControllerId, NetworkHash128 assetId, string data = "")
         {
             NetworkIdentity id;
             if (GetNetworkIdentity(player, out id))
             {
                 id.SetDynamicAssetId(assetId);
             }
-            return instance.InternalAddPlayerForConnection(conn, player, playerControllerId);
+            return instance.InternalAddPlayerForConnection(conn, player, playerControllerId, data);
         }
 
-        static public bool AddPlayerForConnection(NetworkConnection conn, GameObject player, short playerControllerId)
+        static public bool AddPlayerForConnection(NetworkConnection conn, GameObject player, short playerControllerId, string data = "")
         {
-            return instance.InternalAddPlayerForConnection(conn, player, playerControllerId);
+            return instance.InternalAddPlayerForConnection(conn, player, playerControllerId, data);
         }
 
-        internal bool InternalAddPlayerForConnection(NetworkConnection conn, GameObject playerGameObject, short playerControllerId)
+        internal bool InternalAddPlayerForConnection(NetworkConnection conn, GameObject playerGameObject, short playerControllerId, string data = "")
         {
             NetworkIdentity playerNetworkIdentity;
             if (!GetNetworkIdentity(playerGameObject, out playerNetworkIdentity))
@@ -961,7 +961,7 @@ namespace UnityEngine.Networking
             // Set the playerControllerId on the NetworkIdentity on the server, NetworkIdentity.SetLocalPlayer is not called on the server (it is on clients and that sets the playerControllerId there)
             playerNetworkIdentity.SetConnectionToClient(conn, newPlayerController.playerControllerId);
 
-            SetClientReady(conn);
+            SetClientReady(conn,data);
 
             if (SetupLocalPlayerForConnection(conn, playerNetworkIdentity, newPlayerController))
             {
@@ -1036,7 +1036,7 @@ namespace UnityEngine.Networking
             {
                 // it is allowed to provide an already spawned object as the new player object.
                 // so dont spawn it again.
-                Spawn(playerGameObject, conn.groupId);
+                Spawn(playerGameObject, conn.groupId, "ddddaaatttaaa");
             }
 
             OwnerMessage owner = new OwnerMessage();
@@ -1176,11 +1176,10 @@ namespace UnityEngine.Networking
                 }
                 if(uv.groupId != conn.groupId)
                 {
-                    Debug.Log("~~~~uv.assetId:"+uv.assetId +"  uv.netId:"+uv.netId+"  uv.groupId:"+uv.groupId+" conn.groupId:"+conn.groupId, uv.gameObject);
                     continue;
                 }
 
-                if (LogFilter.logDebug) { Debug.Log("Sending spawn message for current server objects name='" + uv.gameObject.name + "' netId=" + uv.netId); }
+                if (LogFilter.logDebug) { Debug.Log("Sending spawn message for current server objects name='" + uv.gameObject.name + "' netId=" + uv.netId+" DATA="+data); }
 
                 var vis = uv.OnCheckObserver(conn);
                 if (vis)
@@ -1328,7 +1327,7 @@ namespace UnityEngine.Networking
 
             objNetworkIdentity.ForceSetGroupId(groupId);
 
-            if (LogFilter.logDebug) { Debug.Log("SpawnObject instance ID " + objNetworkIdentity.netId + " asset ID " + objNetworkIdentity.assetId + " GroupID:" + objNetworkIdentity.groupId); }
+            if (LogFilter.logDebug) { Debug.Log("SpawnObject instance ID " + objNetworkIdentity.netId + " asset ID " + objNetworkIdentity.assetId + " GroupID:" + objNetworkIdentity.groupId+" data="+data); }
 
             objNetworkIdentity.RebuildObservers(true, groupId, data);
             //SendSpawnMessage(objNetworkIdentity, null);
@@ -1349,8 +1348,6 @@ namespace UnityEngine.Networking
                 msg.rotation = uv.transform.rotation;
                 msg.data = data;
 
-                Debug.Log("SendSpawnMessage:"+data);
-
                 // include synch data
                 NetworkWriter writer = new NetworkWriter();
                 uv.UNetSerializeAllVars(writer);
@@ -1358,9 +1355,7 @@ namespace UnityEngine.Networking
                 {
                     msg.payload = writer.ToArray();
                 }
-
-                Debug.Log(conn+":"+msg.data);
-
+                    
                 if (conn != null)
                 {
                     conn.Send(MsgType.ObjectSpawn, msg);
@@ -1595,7 +1590,7 @@ namespace UnityEngine.Networking
 
         static public bool SpawnWithClientAuthority(GameObject obj, NetworkHash128 assetId, NetworkConnection conn, string data = "")
         {
-            Spawn(obj, assetId, data);
+            Spawn(obj, assetId, conn.groupId, data);
 
             var uv = obj.GetComponent<NetworkIdentity>();
             if (uv == null || !uv.isServer)
@@ -1607,7 +1602,7 @@ namespace UnityEngine.Networking
             return uv.AssignClientAuthority(conn);
         }
 
-        static public void Spawn(GameObject obj, NetworkHash128 assetId, string data)
+        static public void Spawn(GameObject obj, NetworkHash128 assetId, uint groupId, string data)
         {
             if (!VerifyCanSpawn(obj))
             {
@@ -1619,7 +1614,7 @@ namespace UnityEngine.Networking
             {
                 id.SetDynamicAssetId(assetId);
             }
-            instance.SpawnObject(obj, id.groupId, data);
+            instance.SpawnObject(obj, groupId, data);
         }
 
         static public void Destroy(GameObject obj)
@@ -1795,7 +1790,6 @@ namespace UnityEngine.Networking
                     // Log this? Something is wrong if this happens? Dangling UnetView?
                     if (uv.gameObject == null)
                         continue;
-
                     Spawn(uv.gameObject, uv.groupId);
 
                     // these objects are server authority - even if "localPlayerAuthority" is set on them
