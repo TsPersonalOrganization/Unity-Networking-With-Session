@@ -961,7 +961,9 @@ namespace UnityEngine.Networking
             // Set the playerControllerId on the NetworkIdentity on the server, NetworkIdentity.SetLocalPlayer is not called on the server (it is on clients and that sets the playerControllerId there)
             playerNetworkIdentity.SetConnectionToClient(conn, newPlayerController.playerControllerId);
 
-            SetClientReady(conn,data);
+            playerNetworkIdentity.data = data;
+
+            SetClientReady(conn);
 
             if (SetupLocalPlayerForConnection(conn, playerNetworkIdentity, newPlayerController))
             {
@@ -1104,12 +1106,12 @@ namespace UnityEngine.Networking
             return true;
         }
 
-        static public void SetClientReady(NetworkConnection conn, string data = "")
+        static public void SetClientReady(NetworkConnection conn)
         {
-            instance.SetClientReadyInternal(conn, data);
+            instance.SetClientReadyInternal(conn);
         }
 
-        internal void SetClientReadyInternal(NetworkConnection conn, string data = "")
+        internal void SetClientReadyInternal(NetworkConnection conn)
         {
             if (LogFilter.logDebug) { Debug.Log("SetClientReadyInternal for conn:" + conn.connectionId); }
 
@@ -1144,7 +1146,7 @@ namespace UnityEngine.Networking
                         var vis = uv.OnCheckObserver(conn);
                         if (vis)
                         {
-                            uv.AddObserver(conn, data);
+                            uv.AddObserver(conn);
                         }
                         if (!uv.isClient)
                         {
@@ -1179,12 +1181,12 @@ namespace UnityEngine.Networking
                     continue;
                 }
 
-                if (LogFilter.logDebug) { Debug.Log("Sending spawn message for current server objects name='" + uv.gameObject.name + "' netId=" + uv.netId+" DATA="+data); }
+                if (LogFilter.logDebug) { Debug.Log("Sending spawn message for current server objects name='" + uv.gameObject.name + "' netId=" + uv.netId+" uv.data="+uv.data); }
 
                 var vis = uv.OnCheckObserver(conn);
                 if (vis)
                 {
-                    uv.AddObserver(conn, data);
+                    uv.AddObserver(conn);
                 }
             }
 
@@ -1192,10 +1194,10 @@ namespace UnityEngine.Networking
             conn.Send(MsgType.SpawnFinished, msg);
         }
 
-        static internal void ShowForConnection(NetworkIdentity uv, NetworkConnection conn, string data)
+        static internal void ShowForConnection(NetworkIdentity uv, NetworkConnection conn)
         {
             if (conn.isReady)
-                instance.SendSpawnMessage(uv, conn, data);
+                instance.SendSpawnMessage(uv, conn );
         }
 
         static internal void HideForConnection(NetworkIdentity uv, NetworkConnection conn)
@@ -1329,12 +1331,12 @@ namespace UnityEngine.Networking
 
             if (LogFilter.logDebug) { Debug.Log("SpawnObject instance ID " + objNetworkIdentity.netId + " asset ID " + objNetworkIdentity.assetId + " GroupID:" + objNetworkIdentity.groupId+" data="+data); }
 
-            objNetworkIdentity.RebuildObservers(true, groupId, data);
+            objNetworkIdentity.RebuildObservers(true, groupId);
             //SendSpawnMessage(objNetworkIdentity, null);
         }
 
 
-        internal void SendSpawnMessage(NetworkIdentity uv, NetworkConnection conn, string data = "")
+        internal void SendSpawnMessage(NetworkIdentity uv, NetworkConnection conn)
         {
             if (uv.serverOnly)
                 return;

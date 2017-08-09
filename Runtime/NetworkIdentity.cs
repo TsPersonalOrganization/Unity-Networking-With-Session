@@ -841,7 +841,7 @@ namespace UnityEngine.Networking
             }
         }
 
-        internal void AddObserver(NetworkConnection conn, string data)
+        internal void AddObserver(NetworkConnection conn)
         {
             if (m_Observers == null)
             {
@@ -860,7 +860,7 @@ namespace UnityEngine.Networking
 
             m_Observers.Add(conn);
             m_ObserverConnections.Add(conn.connectionId);
-            conn.AddToVisList(this, data);
+            conn.AddToVisList(this);
         }
 
         internal void RemoveObserver(NetworkConnection conn)
@@ -875,7 +875,7 @@ namespace UnityEngine.Networking
         }
 
 
-        public void RebuildObservers(bool initialize, uint mGroupId = 0, string data = "")
+        public void RebuildObservers(bool initialize, uint mGroupId = 0)
         {
             if (m_Observers == null)
                 return;
@@ -904,7 +904,7 @@ namespace UnityEngine.Networking
                         if (!conn.isReady) continue;
                         if(conn.groupId != mGroupId)continue;
 
-                        AddObserver(conn, data);
+                        AddObserver(conn);
                     }
 
                     for (int i = 0; i < NetworkServer.localConnections.Count; i++)
@@ -914,7 +914,7 @@ namespace UnityEngine.Networking
                         if (!conn.isReady) continue;
                         if(conn.groupId != mGroupId) continue;
 
-                        AddObserver(conn, data);
+                        AddObserver(conn);
                     }
                 }
                 return;
@@ -942,7 +942,7 @@ namespace UnityEngine.Networking
                 if (initialize || !oldObservers.Contains(conn))
                 {
                     // new observer
-                    conn.AddToVisList(this, data);
+                    conn.AddToVisList(this);
                     if (LogFilter.logDebug) { Debug.Log("New Observer for " + gameObject + " " + conn); }
                     changed = true;
                 }
@@ -1101,6 +1101,7 @@ namespace UnityEngine.Networking
             m_GroupId = 0;
             ClearObservers();
             m_ClientAuthorityOwner = null;
+            m_Data = "";
         }
 
 #if UNITY_EDITOR

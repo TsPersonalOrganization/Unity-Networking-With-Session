@@ -546,12 +546,12 @@ namespace UnityEngine.Networking
             return string.Format("hostId: {0} connectionId: {1} isReady: {2} channel count: {3}", hostId, connectionId, isReady, (m_Channels != null ? m_Channels.Length : 0));
         }
 
-        internal void AddToVisList(NetworkIdentity uv, string data)
+        internal void AddToVisList(NetworkIdentity uv)
         {
             m_VisList.Add(uv);
 
             // spawn uv for this conn
-            NetworkServer.ShowForConnection(uv, this, data);
+            NetworkServer.ShowForConnection(uv, this);
         }
 
         internal void RemoveFromVisList(NetworkIdentity uv, bool isDestroyed)
