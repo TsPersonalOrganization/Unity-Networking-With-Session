@@ -39,6 +39,7 @@ namespace UnityEngine.Networking
         NetworkConnection           m_ClientAuthorityOwner;
 
         uint                        m_GroupId = 0;
+        string                      m_Data = string.Empty;
 
         // member used to mark a identity for future reset
         // check MarkForReset for more information.
@@ -69,6 +70,7 @@ namespace UnityEngine.Networking
 
         public uint groupId { get { return m_GroupId >0?m_GroupId:(m_ClientAuthorityOwner==null?0:m_ClientAuthorityOwner.groupId);} }
 
+        public string data{get{return m_Data;} set {m_Data = value;}}
 
         public NetworkHash128 assetId
         {

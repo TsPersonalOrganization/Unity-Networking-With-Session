@@ -1346,7 +1346,7 @@ namespace UnityEngine.Networking
                 msg.assetId = uv.assetId;
                 msg.position = uv.transform.position;
                 msg.rotation = uv.transform.rotation;
-                msg.data = data;
+                msg.data = uv.data;
 
                 // include synch data
                 NetworkWriter writer = new NetworkWriter();
