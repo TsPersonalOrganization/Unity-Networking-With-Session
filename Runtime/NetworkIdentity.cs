@@ -1101,7 +1101,6 @@ namespace UnityEngine.Networking
             m_GroupId = 0;
             ClearObservers();
             m_ClientAuthorityOwner = null;
-            m_Data = "";
         }
 
 #if UNITY_EDITOR

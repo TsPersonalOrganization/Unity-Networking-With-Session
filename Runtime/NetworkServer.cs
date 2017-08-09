@@ -1329,7 +1329,9 @@ namespace UnityEngine.Networking
 
             objNetworkIdentity.ForceSetGroupId(groupId);
 
-            if (LogFilter.logDebug) { Debug.Log("SpawnObject instance ID " + objNetworkIdentity.netId + " asset ID " + objNetworkIdentity.assetId + " GroupID:" + objNetworkIdentity.groupId+" data="+data); }
+            objNetworkIdentity.data = data;
+
+            if (LogFilter.logDebug) { Debug.Log("SpawnObject instance ID " + objNetworkIdentity.netId + " asset ID " + objNetworkIdentity.assetId + " GroupID:" + objNetworkIdentity.groupId+" objNetworkIdentity.data="+objNetworkIdentity.data); }
 
             objNetworkIdentity.RebuildObservers(true, groupId);
             //SendSpawnMessage(objNetworkIdentity, null);
